@@ -3,6 +3,8 @@
 const { v4: uuidv4 } = require('uuid');
 const clipboardy = require('clipboardy');
 const inquirer = require('inquirer');
+const dayjs = require('dayjs');
+const { showConfig, loadConfig, saveConfig, editConfig } = require('../lib/config');
 
 const args = process.argv.slice(2);
 
@@ -14,6 +16,10 @@ const menuChoices = [
     {
         name: '输入UUID (uuid)',
         value: 'uuid'
+    },
+    {
+        name: '查看配置 (config)',
+        value: 'config'
     },
     {
         name: '退出',
@@ -38,8 +44,9 @@ async function showMenu() {
     return action;
 }
 
-function getChineseTime() {
-    return new Date().toLocaleString('zh').replaceAll('/', '-');
+function getFormattedTime() {
+    const config = loadConfig();
+    return dayjs().format(config.timeFormat);
 }
 
 function copyToClipboard(text) {
@@ -48,7 +55,7 @@ function copyToClipboard(text) {
 }
 
 function handleTime() {
-    const currentTime = getChineseTime();
+    const currentTime = getFormattedTime();
     copyToClipboard(currentTime);
 }
 
@@ -57,19 +64,35 @@ function handleUuid() {
     copyToClipboard(uuid);
 }
 
+async function handleConfig(args) {
+    const subCommand = args[0];
+    
+    if (subCommand === 'edit') {
+        await editConfig();
+        return;
+    }
+    
+    // 没有子命令或其他子命令都显示配置
+    showConfig();
+}
+
 function showHelp() {
     console.log(`
 使用方法: fast [命令]
 
 命令:
-    time         复制当前时间到剪贴板
-    uuid         生成并复制UUID到剪贴板
-    --help, -h   显示帮助信息
+    time              复制当前时间到剪贴板
+    uuid              生成并复制UUID到剪贴板
+    config            查看配置
+    config edit       编辑配置文件
+    --help, -h        显示帮助信息
 
 示例:
     $ fast time
     $ fast uuid
-    $ fast       # 显示交互式菜单
+    $ fast config
+    $ fast config edit
+    $ fast            # 显示交互式菜单
     `);
 }
 
@@ -89,6 +112,8 @@ async function main() {
         handleTime();
     } else if (command === 'uuid') {
         handleUuid();
+    } else if (command === 'config') {
+        await handleConfig(args.slice(1));
     } else if (command === 'exit') {
         process.exit(0);
     } else {

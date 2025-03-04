@@ -48,7 +48,24 @@ fast
 
 - `time`: 复制当前时间到剪贴板，格式为 "YYYY-MM-DD HH:mm:ss"
 - `uuid`: 生成一个新的UUID并复制到剪贴板
+- `config`: 查看配置
+  - `config edit`: 使用默认编辑器打开配置文件
 - `--help`, `-h`: 显示帮助信息
+
+## 配置说明
+
+配置文件保存在用户目录下的 `.fast-cli/config.json` 中。
+可以通过 `fast config edit` 命令直接编辑。
+
+配置项包括：
+
+- `timeFormat`: 时间格式（使用 dayjs 格式规范）
+  - 默认值：`YYYY-MM-DD HH:mm:ss`
+  - 示例：
+    - `YYYY年MM月DD日 HH:mm:ss` -> 2023年11月21日 15:30:45
+    - `MM/DD/YYYY` -> 11/21/2023
+    - `HH:mm` -> 15:30
+- `uuidVersion`: UUID版本号
 
 ## 开发相关
 
