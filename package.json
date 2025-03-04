@@ -1,10 +1,10 @@
 {
-  "name": "fast-cli",
+  "name": "@jacksion/fast-input-cli",
   "version": "1.0.0",
   "description": "一个命令行工具",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node ./bin/index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,8 @@
     "fast": "./bin/index.js"
   },
   "dependencies": {
+    "clipboardy": "^2.3.0",
     "inquirer": "^8.2.5",
-    "robotjs": "^0.6.0",
     "uuid": "^8.3.2"
   }
 }

@@ -1,15 +1,11 @@
 #!/usr/bin/env node
 
 const { v4: uuidv4 } = require('uuid');
-const robot = require('robotjs');
-const { exec } = require('child_process');
+const clipboardy = require('clipboardy');
 const inquirer = require('inquirer');
-const fs = require('fs');
-const path = require('path');
 
 const args = process.argv.slice(2);
 
-// 定义菜单选项
 const menuChoices = [
     {
         name: '输入当前时间 (time)',
@@ -46,36 +42,19 @@ function getChineseTime() {
     return new Date().toLocaleString('zh').replaceAll('/', '-');
 }
 
-function runScript(scriptName, replacements) {
-    const scriptPath = path.join(__dirname, '..', 'scripts', scriptName);
-    
-    // 读取并更新 VBS 文件内容
-    let content = fs.readFileSync(scriptPath, 'utf8');
-    for (const [key, value] of Object.entries(replacements)) {
-        content = content.replace(new RegExp(`${key} = ".*"`, 'g'), `${key} = "${value}"`);
-    }
-    fs.writeFileSync(scriptPath, content, 'utf8');
-
-    // 执行 VBS 脚本
-    exec(`cscript //nologo "${scriptPath}"`, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`执行出错: ${error}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`脚本错误: ${stderr}`);
-        }
-    });
+function copyToClipboard(text) {
+    clipboardy.writeSync(text);
+    console.log(`已复制到剪贴板: ${text}`);
 }
 
-function runTimeScript() {
+function handleTime() {
     const currentTime = getChineseTime();
-    runScript('fastTime.vbs', { CurrentTime: currentTime });
+    copyToClipboard(currentTime);
 }
 
-function runUuidScript() {
+function handleUuid() {
     const uuid = uuidv4();
-    runScript('fastUuid.vbs', { UUID: uuid });
+    copyToClipboard(uuid);
 }
 
 async function main() {
@@ -86,11 +65,11 @@ async function main() {
     }
 
     if (command === 'time') {
-        runTimeScript();
+        handleTime();
     } else if (command === 'uuid') {
-        runUuidScript();
+        handleUuid();
     } else if (command !== 'exit') {
-        console.log(`Unknown command: ${command}`);
+        console.log(`未知命令: ${command}`);
         process.exit(1);
     }
 }
