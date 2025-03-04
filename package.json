@@ -1,16 +1,30 @@
 {
   "name": "@jacksion/fast-input-cli",
-  "version": "1.0.0",
-  "description": "一个命令行工具",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "一个简单的命令行工具，用于快速复制常用文本到剪贴板",
+  "main": "bin/index.js",
   "scripts": {
     "dev": "node ./bin/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "clipboard",
+    "time",
+    "uuid",
+    "tool"
+  ],
+  "author": "jacksion",
+  "license": "MIT",
   "bin": {
     "fast": "./bin/index.js"
+  },
+  "homepage": "https://github.com/jacksion/fast-input-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacksion/fast-input-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jacksion/fast-input-cli/issues"
   },
   "dependencies": {
     "clipboardy": "^2.3.0",
