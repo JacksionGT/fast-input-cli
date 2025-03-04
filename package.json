@@ -1,0 +1,20 @@
+{
+  "name": "fast-cli",
+  "version": "1.0.0",
+  "description": "一个命令行工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "fast": "./bin/index.js"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.5",
+    "robotjs": "^0.6.0",
+    "uuid": "^8.3.2"
+  }
+}
