@@ -1,39 +1,67 @@
-# fast-cli
+# fast-input-cli
 
-一个命令行工具，可以在cmd中运行。
+一个简单的命令行工具，用于快速复制常用文本到剪贴板。
+
+## 功能特点
+
+- 生成并复制当前时间
+- 生成并复制UUID
+- 交互式菜单
+- 命令行参数支持
 
 ## 安装
 
-```sh
-npm install -g .
+```bash
+# 全局安装
+npm install -g @jacksion/fast-input-cli
+
+# 或本地安装
+npm install @jacksion/fast-input-cli
 ```
 
-## 使用
+## 使用方法
 
-### 切换到上一个窗口并键入当前时间
+### 命令行方式
 
-```sh
+```bash
+# 复制当前时间
 fast time
-```
 
-### 切换到上一个窗口并键入一个生成的GUID
-
-```sh
+# 生成并复制UUID
 fast uuid
+
+# 显示帮助信息
+fast --help
 ```
 
-### VBS 脚本示例
+### 交互式菜单
 
-在 `scripts` 目录下提供了一个 VBS 脚本示例，用于打开记事本并输入文本：
+直接运行 `fast` 命令，将显示交互式菜单：
 
-```sh
-cscript scripts/typeText.vbs
+```bash
+fast
 ```
 
-### VBS 脚本版本的 fast time
+然后使用上下键选择需要的功能，按回车确认。
 
-使用 VBS 脚本实现切换到上一个窗口并输入当前时间：
+## 命令说明
 
-```sh
-cscript scripts/fastTime.vbs
+- `time`: 复制当前时间到剪贴板，格式为 "YYYY-MM-DD HH:mm:ss"
+- `uuid`: 生成一个新的UUID并复制到剪贴板
+- `--help`, `-h`: 显示帮助信息
+
+## 开发相关
+
+### 本地测试
+
+```bash
+# 克隆代码后安装依赖
+npm install
+
+# 运行开发测试
+npm run dev
 ```
+
+## 许可证
+
+ISC

@@ -57,8 +57,29 @@ function handleUuid() {
     copyToClipboard(uuid);
 }
 
+function showHelp() {
+    console.log(`
+使用方法: fast [命令]
+
+命令:
+    time         复制当前时间到剪贴板
+    uuid         生成并复制UUID到剪贴板
+    --help, -h   显示帮助信息
+
+示例:
+    $ fast time
+    $ fast uuid
+    $ fast       # 显示交互式菜单
+    `);
+}
+
 async function main() {
     let command = args[0];
+
+    if (command === '--help' || command === '-h') {
+        showHelp();
+        process.exit(0);
+    }
 
     if (!command) {
         command = await showMenu();
@@ -68,8 +89,11 @@ async function main() {
         handleTime();
     } else if (command === 'uuid') {
         handleUuid();
-    } else if (command !== 'exit') {
-        console.log(`未知命令: ${command}`);
+    } else if (command === 'exit') {
+        process.exit(0);
+    } else {
+        console.log(`错误: 未知命令 "${command}"\n`);
+        showHelp();
         process.exit(1);
     }
 }
